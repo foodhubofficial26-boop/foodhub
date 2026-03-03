@@ -1,4 +1,4 @@
-# Task: Build Complete Food Ordering System
+# Task: Build Complete Food Ordering System + Restaurant Management
 
 ## Plan
 - [x] Step 1: Database Setup
@@ -28,6 +28,7 @@
   - [x] Profile page
 - [x] Step 6: Admin Pages
   - [x] Dashboard
+  - [x] Restaurant Management (NEW)
   - [x] Food Management
   - [x] Category Management
   - [x] Orders Management
@@ -43,13 +44,21 @@
   - [x] Update App.tsx
 - [x] Step 9: Validation
   - [x] Run lint and fix issues
+- [x] Step 10: Add Restaurant Management Features
+  - [x] Create AdminRestaurantsPage
+  - [x] Add create restaurant functionality
+  - [x] Add edit restaurant functionality
+  - [x] Add delete restaurant functionality
+  - [x] Add image upload for restaurants
+  - [x] Update admin navigation
 
 ## Notes
 - Using Supabase for backend (auth, database, storage)
 - Implementing role-based access (user, admin)
 - First registered user becomes admin
-- Image upload for food items with compression
+- Image upload for food items, categories, and restaurants with compression
 - Real-time order tracking
 - COD payment only
 - All features completed successfully
 - Lint passed without errors
+- Restaurant management now includes full CRUD operations with image upload

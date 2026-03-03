@@ -97,6 +97,15 @@ export async function updateRestaurant(id: string, updates: Partial<Restaurant>)
   return data;
 }
 
+export async function deleteRestaurant(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('restaurants')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
 // ============ Food Items ============
 export async function getFoodItemsByRestaurant(restaurantId: string, filters?: {
   category?: string;

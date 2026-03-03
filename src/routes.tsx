@@ -9,6 +9,7 @@ import OrderTrackingPage from './pages/OrderTrackingPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminRestaurantsPage from './pages/admin/AdminRestaurantsPage';
 import AdminFoodPage from './pages/admin/AdminFoodPage';
 import AdminCategoriesPage from './pages/admin/AdminCategoriesPage';
 import AdminOrdersPage from './pages/admin/AdminOrdersPage';
@@ -72,6 +73,11 @@ const routes: RouteConfig[] = [
     name: 'Admin Dashboard',
     path: '/admin',
     element: <AdminDashboardPage />
+  },
+  {
+    name: 'Admin Restaurants',
+    path: '/admin/restaurants',
+    element: <AdminRestaurantsPage />
   },
   {
     name: 'Admin Food',

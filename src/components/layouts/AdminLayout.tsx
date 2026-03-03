@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, LayoutDashboard, UtensilsCrossed, FolderTree, ShoppingBag, Users, LogOut } from 'lucide-react';
+import { Menu, LayoutDashboard, UtensilsCrossed, FolderTree, ShoppingBag, Users, LogOut, Store } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -17,6 +17,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+    { name: 'Restaurants', path: '/admin/restaurants', icon: Store },
     { name: 'Food Items', path: '/admin/food', icon: UtensilsCrossed },
     { name: 'Categories', path: '/admin/categories', icon: FolderTree },
     { name: 'Orders', path: '/admin/orders', icon: ShoppingBag },
