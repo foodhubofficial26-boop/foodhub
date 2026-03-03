@@ -1,3 +1,5 @@
+export * from './types';
+
 export interface Option {
   label: string;
   value: string;
