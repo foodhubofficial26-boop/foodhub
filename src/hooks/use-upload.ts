@@ -10,25 +10,20 @@ interface FileWithPreview extends File {
   errors: readonly FileError[];
 }
 
-type UseSupabaseUploadOptions = {
-  /** Not used with backend upload – kept for API compatibility */
-  bucketName: string;
-  /** Not used with backend upload – kept for API compatibility */
-  path?: string;
+interface FileWithPreview extends File {
+  preview?: string;
+  errors: readonly FileError[];
+}
+
+type UseUploadOptions = {
   allowedMimeTypes?: string[];
   maxFileSize?: number;
   maxFiles?: number;
-  /** Not used with backend upload – kept for API compatibility */
-  cacheControl?: number;
-  /** Not used with backend upload – kept for API compatibility */
-  upsert?: boolean;
-  /** Not used – kept for API compatibility */
-  supabase?: unknown;
 };
 
-type UseSupabaseUploadReturn = ReturnType<typeof useSupabaseUpload>;
+type UseUploadReturn = ReturnType<typeof useUpload>;
 
-const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
+const useUpload = (options: UseUploadOptions) => {
   const {
     allowedMimeTypes = [],
     maxFileSize = Number.POSITIVE_INFINITY,
@@ -160,4 +155,4 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
   };
 };
 
-export { useSupabaseUpload, type UseSupabaseUploadOptions, type UseSupabaseUploadReturn };
+export { useUpload, type UseUploadOptions, type UseUploadReturn };

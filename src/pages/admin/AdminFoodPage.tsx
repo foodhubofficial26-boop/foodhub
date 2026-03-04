@@ -15,7 +15,7 @@ import type { FoodItem, Category, Restaurant } from '@/types/types';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
-import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
+import { useUpload } from '@/hooks/use-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
 
 export default function AdminFoodPage() {
@@ -25,7 +25,7 @@ export default function AdminFoodPage() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<FoodItem | null>(null);
-  const { onUpload, ...dropzoneProps } = useSupabaseUpload({ bucketName: 'food_images' });
+  const { onUpload, ...dropzoneProps } = useUpload({});
   const dropzoneAll = { ...dropzoneProps, onUpload };
 
   const [formData, setFormData] = useState({

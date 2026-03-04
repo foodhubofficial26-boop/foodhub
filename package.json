@@ -54,7 +54,6 @@
     "jsonwebtoken": "^9.0.3",
     "ky": "^1.13.0",
     "lucide-react": "^0.553.0",
-    "miaoda-auth-react": "2.0.6",
     "miaoda-sc-plugin": "1.0.56",
     "mongoose": "^9.2.4",
     "motion": "^12.23.25",
