@@ -1,0 +1,51 @@
+# Task: Migrate from Supabase to MongoDB Atlas
+
+## Plan
+- [ ] Step 1: Backend Setup
+  - [ ] Create Express server structure
+  - [ ] Install backend dependencies (express, mongoose, jwt, bcrypt, multer, cors, dotenv)
+  - [ ] Set up MongoDB Atlas connection
+  - [ ] Create environment variables
+- [ ] Step 2: Mongoose Models
+  - [ ] User model
+  - [ ] Restaurant model
+  - [ ] Category model
+  - [ ] FoodItem model
+  - [ ] Order model
+  - [ ] Address model
+- [ ] Step 3: Authentication
+  - [ ] JWT authentication middleware
+  - [ ] Register endpoint
+  - [ ] Login endpoint
+  - [ ] Password hashing with bcrypt
+- [ ] Step 4: API Routes
+  - [ ] Auth routes (/api/auth/*)
+  - [ ] Restaurant routes (/api/restaurants/*)
+  - [ ] Category routes (/api/categories/*)
+  - [ ] Food routes (/api/food/*)
+  - [ ] Order routes (/api/orders/*)
+  - [ ] User routes (/api/users/*)
+  - [ ] Address routes (/api/addresses/*)
+- [ ] Step 5: File Upload
+  - [ ] Set up Multer for file handling
+  - [ ] Configure Cloudinary or local storage
+  - [ ] Image upload endpoint
+- [ ] Step 6: Frontend Migration
+  - [ ] Remove Supabase dependencies
+  - [ ] Create API service layer with fetch/axios
+  - [ ] Update AuthContext for JWT
+  - [ ] Update all API calls in pages
+  - [ ] Update image upload components
+- [ ] Step 7: Testing & Validation
+  - [ ] Test all API endpoints
+  - [ ] Test authentication flow
+  - [ ] Test CRUD operations
+  - [ ] Run lint
+
+## Notes
+- Using MongoDB Atlas for database
+- Express.js for REST API
+- JWT for authentication
+- Multer + Cloudinary for image uploads
+- First registered user becomes admin
+- All existing features maintained
