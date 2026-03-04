@@ -14,13 +14,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Trash2 } from 'lucide-react';
 import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
-import { supabase } from '@/db/supabase';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { uploadFile, uploading, onUpload, ...dropzoneProps } = useSupabaseUpload({ bucketName: 'app-a04i0mry03k1_food_images', supabase });
+  const { onUpload, ...dropzoneProps } = useSupabaseUpload({ bucketName: 'food_images' });
+  const dropzoneAll = { ...dropzoneProps, onUpload };
 
   const [formData, setFormData] = useState({
     name: '',
@@ -43,18 +43,6 @@ export default function AdminCategoriesPage() {
     }
   };
 
-  const handleImageUpload = async () => {
-    if (dropzoneProps.files.length === 0) return;
-    await onUpload();
-    if (dropzoneProps.files[0]) {
-      const file = dropzoneProps.files[0];
-      const fileName = `${Date.now()}_${file.name}`;
-      const { data } = supabase.storage
-        .from('app-a04i0mry03k1_food_images')
-        .getPublicUrl(fileName);
-      setFormData({ ...formData, image_url: data.publicUrl });
-    }
-  };
 
   const handleSubmit = async () => {
     if (!formData.name) {
@@ -136,7 +124,7 @@ export default function AdminCategoriesPage() {
                 </div>
                 <div>
                   <Label>Image</Label>
-                  <Dropzone {...dropzoneProps}>
+                  <Dropzone {...dropzoneAll}>
                     <DropzoneEmptyState />
                     <DropzoneContent />
                   </Dropzone>
@@ -144,8 +132,8 @@ export default function AdminCategoriesPage() {
                     <img src={formData.image_url} alt="Preview" className="mt-2 h-32 w-32 object-cover rounded" />
                   )}
                 </div>
-                <Button onClick={handleSubmit} className="w-full" disabled={uploading}>
-                  {uploading ? 'Uploading...' : 'Create Category'}
+                <Button onClick={handleSubmit} className="w-full" disabled={dropzoneProps.loading}>
+                  {dropzoneProps.loading ? 'Uploading...' : 'Create Category'}
                 </Button>
               </div>
             </DialogContent>

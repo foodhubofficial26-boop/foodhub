@@ -1,24 +1,20 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { supabase } from '@/db/supabase';
-import type { User } from '@supabase/supabase-js';
-import type { Profile } from '@/types/types';
+import axios from 'axios';
 
-export async function getProfile(userId: string): Promise<Profile | null> {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .maybeSingle();
+const API_URL = import.meta.env.VITE_API_URL || '';
 
-  if (error) {
-    console.error('Failed to fetch user profile:', error);
-    return null;
-  }
-  return data;
+export interface AuthUser {
+  id: string;
+  username: string;
+  email?: string;
+  fullName?: string;
+  phone?: string;
+  role: 'user' | 'admin';
 }
+
 interface AuthContextType {
-  user: User | null;
-  profile: Profile | null;
+  user: AuthUser | null;
+  profile: AuthUser | null;
   loading: boolean;
   signInWithUsername: (username: string, password: string) => Promise<{ error: Error | null }>;
   signUpWithUsername: (username: string, password: string) => Promise<{ error: Error | null }>;
@@ -28,85 +24,122 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const TOKEN_KEY = 'fh_token';
+
+export function getAuthToken(): string | null {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function setAuthHeaders() {
+  const token = getAuthToken();
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   const refreshProfile = async () => {
-    if (!user) {
-      setProfile(null);
+    const token = getAuthToken();
+    if (!token) {
+      setUser(null);
       return;
     }
-
-    const profileData = await getProfile(user.id);
-    setProfile(profileData);
+    try {
+      setAuthHeaders();
+      const { data } = await axios.get(`${API_URL}/api/auth/me`);
+      setUser({
+        id: data._id || data.id,
+        username: data.username,
+        email: data.email,
+        fullName: data.fullName,
+        phone: data.phone,
+        role: data.role,
+      });
+    } catch {
+      localStorage.removeItem(TOKEN_KEY);
+      setUser(null);
+    }
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        getProfile(session.user.id).then(setProfile);
-      }
+    const token = getAuthToken();
+    if (token) {
+      setAuthHeaders();
+      refreshProfile().finally(() => setLoading(false));
+    } else {
       setLoading(false);
-    });
-    // In this function, do NOT use any await calls. Use `.then()` instead to avoid deadlocks.
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        getProfile(session.user.id).then(setProfile);
-      } else {
-        setProfile(null);
-      }
-    });
-
-    return () => subscription.unsubscribe();
+    }
   }, []);
 
   const signInWithUsername = async (username: string, password: string) => {
     try {
-      const email = `${username}@miaoda.com`;
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
+      const { data } = await axios.post(`${API_URL}/api/auth/login`, {
+        username,
         password,
       });
-
-      if (error) throw error;
+      localStorage.setItem(TOKEN_KEY, data.token);
+      setAuthHeaders();
+      setUser({
+        id: data.id || data._id,
+        username: data.username,
+        email: data.email,
+        fullName: data.fullName,
+        phone: data.phone,
+        role: data.role,
+      });
       return { error: null };
-    } catch (error) {
-      return { error: error as Error };
+    } catch (err: any) {
+      const message = err.response?.data?.message || err.message || 'Login failed';
+      return { error: new Error(message) };
     }
   };
 
   const signUpWithUsername = async (username: string, password: string) => {
     try {
-      const email = `${username}@miaoda.com`;
-      const { error } = await supabase.auth.signUp({
-        email,
+      const { data } = await axios.post(`${API_URL}/api/auth/register`, {
+        username,
         password,
-        options: {
-          data: {
-            username
-          }
-        }
       });
-
-      if (error) throw error;
+      localStorage.setItem(TOKEN_KEY, data.token);
+      setAuthHeaders();
+      setUser({
+        id: data.id || data._id,
+        username: data.username,
+        email: data.email,
+        fullName: data.fullName,
+        phone: data.phone,
+        role: data.role,
+      });
       return { error: null };
-    } catch (error) {
-      return { error: error as Error };
+    } catch (err: any) {
+      const message = err.response?.data?.message || err.message || 'Registration failed';
+      return { error: new Error(message) };
     }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    localStorage.removeItem(TOKEN_KEY);
+    delete axios.defaults.headers.common['Authorization'];
     setUser(null);
-    setProfile(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, signInWithUsername, signUpWithUsername, signOut, refreshProfile }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        profile: user,
+        loading,
+        signInWithUsername,
+        signUpWithUsername,
+        signOut,
+        refreshProfile,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

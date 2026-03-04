@@ -17,7 +17,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
-import { supabase } from '@/db/supabase';
 
 export default function AdminFoodPage() {
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
@@ -26,7 +25,8 @@ export default function AdminFoodPage() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<FoodItem | null>(null);
-  const { uploadFile, uploading, onUpload, ...dropzoneProps } = useSupabaseUpload({ bucketName: 'app-a04i0mry03k1_food_images', supabase });
+  const { onUpload, ...dropzoneProps } = useSupabaseUpload({ bucketName: 'food_images' });
+  const dropzoneAll = { ...dropzoneProps, onUpload };
 
   const [formData, setFormData] = useState({
     name: '',
@@ -60,18 +60,6 @@ export default function AdminFoodPage() {
     }
   };
 
-  const handleImageUpload = async () => {
-    if (dropzoneProps.files.length === 0) return;
-    await onUpload();
-    if (dropzoneProps.files[0]) {
-      const file = dropzoneProps.files[0];
-      const fileName = `${Date.now()}_${file.name}`;
-      const { data } = supabase.storage
-        .from('app-a04i0mry03k1_food_images')
-        .getPublicUrl(fileName);
-      setFormData({ ...formData, image_url: data.publicUrl });
-    }
-  };
 
   const handleSubmit = async () => {
     if (!formData.name || !formData.price || !formData.restaurant_id) {
@@ -225,7 +213,7 @@ export default function AdminFoodPage() {
                 </div>
                 <div>
                   <Label>Image</Label>
-                  <Dropzone {...dropzoneProps}>
+                  <Dropzone {...dropzoneAll}>
                     <DropzoneEmptyState />
                     <DropzoneContent />
                   </Dropzone>
@@ -249,8 +237,8 @@ export default function AdminFoodPage() {
                     onCheckedChange={(checked) => setFormData({ ...formData, is_available: checked })}
                   />
                 </div>
-                <Button onClick={handleSubmit} className="w-full" disabled={uploading}>
-                  {uploading ? 'Uploading...' : editingItem ? 'Update' : 'Create'}
+                <Button onClick={handleSubmit} className="w-full" disabled={dropzoneProps.loading}>
+                  {dropzoneProps.loading ? 'Uploading...' : editingItem ? 'Update' : 'Create'}
                 </Button>
               </div>
             </DialogContent>

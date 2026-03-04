@@ -16,14 +16,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Pencil, Trash2, Star } from 'lucide-react';
 import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
-import { supabase } from '@/db/supabase';
 
 export default function AdminRestaurantsPage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingRestaurant, setEditingRestaurant] = useState<Restaurant | null>(null);
-  const dropzoneProps = useSupabaseUpload({ bucketName: 'app-a04i0mry03k1_food_images', supabase });
+  const dropzoneProps = useSupabaseUpload({ bucketName: 'food_images' });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -54,15 +53,15 @@ export default function AdminRestaurantsPage() {
   const handleImageUpload = async () => {
     if (dropzoneProps.files.length === 0) return;
     await dropzoneProps.onUpload();
-    
-    // Get the uploaded file URL from successes
+
+    // Get the Cloudinary URL from the upload response
     if (dropzoneProps.successes.length > 0) {
       const fileName = dropzoneProps.successes[0];
-      const { data } = supabase.storage
-        .from('app-a04i0mry03k1_food_images')
-        .getPublicUrl(fileName);
-      setFormData({ ...formData, image_url: data.publicUrl });
-      toast.success('Image uploaded successfully');
+      const url = dropzoneProps.uploadedUrls?.[fileName];
+      if (url) {
+        setFormData({ ...formData, image_url: url });
+        toast.success('Image uploaded successfully');
+      }
     }
   };
 

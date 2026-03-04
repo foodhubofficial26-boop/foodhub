@@ -37,7 +37,7 @@ router.get('/profile', protect, async (req: AuthRequest, res: Response) => {
 router.put('/profile', protect, async (req: AuthRequest, res: Response) => {
   try {
     const { fullName, email, phone } = req.body;
-    
+
     const user = await User.findByIdAndUpdate(
       req.user?.id,
       { fullName, email, phone },
@@ -54,13 +54,48 @@ router.put('/profile', protect, async (req: AuthRequest, res: Response) => {
   }
 });
 
+// @route   GET /api/users/:id
+// @desc    Get user by ID
+// @access  Private/Admin
+router.get('/:id', protect, admin, async (req: AuthRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @route   PUT /api/users/:id
+// @desc    Update user by ID (admin)
+// @access  Private/Admin
+router.put('/:id', protect, admin, async (req: AuthRequest, res: Response) => {
+  try {
+    const { fullName, email, phone, role } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { fullName, email, phone, role },
+      { new: true }
+    ).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // @route   PUT /api/users/:id/role
 // @desc    Update user role
 // @access  Private/Admin
 router.put('/:id/role', protect, admin, async (req: AuthRequest, res: Response) => {
   try {
     const { role } = req.body;
-    
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { role },

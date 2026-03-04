@@ -6,20 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Star, Filter } from 'lucide-react';
+import { Search, Star } from 'lucide-react';
 import { getRestaurants, getCategories } from '@/db/api';
 import type { Restaurant, Category } from '@/types/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function RestaurantListPage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [_categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const search = searchParams.get('search') || '';
-  const categoryFilter = searchParams.get('category') || '';
   const [vegFilter, setVegFilter] = useState('all');
   const [ratingFilter, setRatingFilter] = useState('all');
 
