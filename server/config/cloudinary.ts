@@ -1,4 +1,5 @@
-import { v2 as cloudinary } from 'cloudinary';
+import pkg from 'cloudinary';
+const { v2: cloudinary } = pkg;
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import multer from 'multer';
 
@@ -17,7 +18,7 @@ const storage = new CloudinaryStorage({
   } as any,
 });
 
-export const upload = multer({ 
+export const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });

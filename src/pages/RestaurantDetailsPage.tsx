@@ -208,7 +208,7 @@ export default function RestaurantDetailsPage() {
                     {item.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary">${item.price.toFixed(2)}</span>
+                    <span className="text-lg font-bold text-primary">₹{item.price.toFixed(2)}</span>
                     <Button onClick={() => addToCart(item)} size="sm">
                       <Plus className="h-4 w-4 mr-1" />
                       Add

@@ -125,7 +125,7 @@ export default function CartPage() {
                           </Button>
                         </div>
                         <span className="font-bold text-lg">
-                          ${(item.food_item.price * item.quantity).toFixed(2)}
+                          ₹{(item.food_item.price * item.quantity).toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -143,15 +143,15 @@ export default function CartPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span>${totalAmount.toFixed(2)}</span>
+                    <span>₹{totalAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Delivery Fee</span>
-                    <span>$2.99</span>
+                    <span>₹40.00</span>
                   </div>
                   <div className="border-t pt-2 flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span className="text-primary">${(totalAmount + 2.99).toFixed(2)}</span>
+                    <span className="text-primary">₹{(totalAmount + 40).toFixed(2)}</span>
                   </div>
                 </div>
                 <Button className="w-full" size="lg" onClick={() => navigate('/checkout')}>

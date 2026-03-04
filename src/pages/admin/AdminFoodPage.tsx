@@ -272,7 +272,7 @@ export default function AdminFoodPage() {
                       <TableCell className="font-medium">{item.name}</TableCell>
                       <TableCell>{item.restaurant?.name}</TableCell>
                       <TableCell>{item.category?.name || 'N/A'}</TableCell>
-                      <TableCell>${item.price.toFixed(2)}</TableCell>
+                      <TableCell>₹{item.price.toFixed(2)}</TableCell>
                       <TableCell>
                         <Badge variant={item.is_veg ? 'secondary' : 'outline'}>
                           {item.is_veg ? '🌱 Veg' : '🍖 Non-Veg'}

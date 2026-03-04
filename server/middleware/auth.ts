@@ -9,7 +9,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const protect = async (req: any, res: any, next: NextFunction) => {
   try {
     let token;
 
@@ -29,7 +29,7 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   }
 };
 
-export const admin = (req: AuthRequest, res: Response, next: NextFunction) => {
+export const admin = (req: any, res: any, next: NextFunction) => {
   if (req.user && req.user.role === 'admin') {
     next();
   } else {

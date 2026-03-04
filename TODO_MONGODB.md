@@ -1,46 +1,46 @@
 # Task: Migrate from Supabase to MongoDB Atlas
 
 ## Plan
-- [ ] Step 1: Backend Setup
-  - [ ] Create Express server structure
-  - [ ] Install backend dependencies (express, mongoose, jwt, bcrypt, multer, cors, dotenv)
-  - [ ] Set up MongoDB Atlas connection
-  - [ ] Create environment variables
-- [ ] Step 2: Mongoose Models
-  - [ ] User model
-  - [ ] Restaurant model
-  - [ ] Category model
-  - [ ] FoodItem model
-  - [ ] Order model
-  - [ ] Address model
-- [ ] Step 3: Authentication
-  - [ ] JWT authentication middleware
-  - [ ] Register endpoint
-  - [ ] Login endpoint
-  - [ ] Password hashing with bcrypt
-- [ ] Step 4: API Routes
-  - [ ] Auth routes (/api/auth/*)
-  - [ ] Restaurant routes (/api/restaurants/*)
-  - [ ] Category routes (/api/categories/*)
-  - [ ] Food routes (/api/food/*)
-  - [ ] Order routes (/api/orders/*)
-  - [ ] User routes (/api/users/*)
-  - [ ] Address routes (/api/addresses/*)
-- [ ] Step 5: File Upload
-  - [ ] Set up Multer for file handling
-  - [ ] Configure Cloudinary or local storage
-  - [ ] Image upload endpoint
-- [ ] Step 6: Frontend Migration
-  - [ ] Remove Supabase dependencies
-  - [ ] Create API service layer with fetch/axios
-  - [ ] Update AuthContext for JWT
-  - [ ] Update all API calls in pages
-  - [ ] Update image upload components
-- [ ] Step 7: Testing & Validation
-  - [ ] Test all API endpoints
-  - [ ] Test authentication flow
-  - [ ] Test CRUD operations
-  - [ ] Run lint
+- [x] Step 1: Backend Setup
+  - [x] Create Express server structure
+  - [x] Install backend dependencies (express, mongoose, jwt, bcrypt, multer, cors, dotenv)
+  - [x] Set up MongoDB Atlas connection
+  - [x] Create environment variables
+- [x] Step 2: Mongoose Models
+  - [x] User model
+  - [x] Restaurant model
+  - [x] Category model
+  - [x] FoodItem model
+  - [x] Order model
+  - [x] Address model
+- [x] Step 3: Authentication
+  - [x] JWT authentication middleware
+  - [x] Register endpoint
+  - [x] Login endpoint
+  - [x] Password hashing with bcrypt
+- [x] Step 4: API Routes
+  - [x] Auth routes (/api/auth/*)
+  - [x] Restaurant routes (/api/restaurants/*)
+  - [x] Category routes (/api/categories/*)
+  - [x] Food routes (/api/food/*)
+  - [x] Order routes (/api/orders/*)
+  - [x] User routes (/api/users/*)
+  - [x] Address routes (/api/addresses/*)
+- [x] Step 5: File Upload
+  - [x] Set up Multer for file handling
+  - [x] Configure Cloudinary or local storage
+  - [x] Image upload endpoint
+- [x] Step 6: Frontend Migration
+  - [x] Remove Supabase dependencies
+  - [x] Create API service layer with fetch/axios
+  - [x] Update AuthContext for JWT
+  - [x] Update all API calls in pages
+  - [x] Update image upload components
+- [x] Step 7: Testing & Validation
+  - [x] Test all API endpoints
+  - [x] Test authentication flow
+  - [x] Test CRUD operations
+  - [x] Run lint & Production Build
 
 ## Notes
 - Using MongoDB Atlas for database

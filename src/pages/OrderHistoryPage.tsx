@@ -129,7 +129,7 @@ export default function OrderHistoryPage() {
 
                         <div className="flex items-center justify-between pt-4 border-t">
                           <span className="font-bold text-lg text-primary">
-                            ${order.total_amount.toFixed(2)}
+                            ₹{order.total_amount.toFixed(2)}
                           </span>
                           <Button variant="outline" size="sm">
                             View Details

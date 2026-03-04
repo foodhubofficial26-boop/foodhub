@@ -14,7 +14,7 @@ const generateToken = (id: string, username: string, role: string) => {
 // @route   POST /api/auth/register
 // @desc    Register new user
 // @access  Public
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/register', async (req: any, res: any) => {
   try {
     const { username, password, email, fullName, phone } = req.body;
 
@@ -61,7 +61,7 @@ router.post('/register', async (req: Request, res: Response) => {
 // @route   POST /api/auth/login
 // @desc    Login user
 // @access  Public
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/login', async (req: any, res: any) => {
   try {
     const { username, password } = req.body;
 
@@ -100,7 +100,7 @@ router.post('/login', async (req: Request, res: Response) => {
 // @route   GET /api/auth/me
 // @desc    Get current user
 // @access  Private
-router.get('/me', async (req: Request, res: Response) => {
+router.get('/me', async (req: any, res: any) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {

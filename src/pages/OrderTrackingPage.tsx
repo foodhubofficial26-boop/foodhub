@@ -109,9 +109,8 @@ export default function OrderTrackingPage() {
                     return (
                       <div key={status} className="flex flex-col items-center">
                         <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${
-                            isCompleted ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                          }`}
+                          className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${isCompleted ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                            }`}
                         >
                           <Icon className="h-6 w-6" />
                         </div>
@@ -145,7 +144,7 @@ export default function OrderTrackingPage() {
                 </div>
                 <div>
                   <p className="text-muted-foreground">Total Amount</p>
-                  <p className="font-medium text-primary">${order.total_amount.toFixed(2)}</p>
+                  <p className="font-medium text-primary">₹{order.total_amount.toFixed(2)}</p>
                 </div>
               </div>
               <div>
@@ -168,7 +167,7 @@ export default function OrderTrackingPage() {
                       <p className="font-medium">{item.food_name}</p>
                       <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
                     </div>
-                    <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
               </div>

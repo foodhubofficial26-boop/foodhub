@@ -89,7 +89,7 @@ export default function AdminOrdersPage() {
                         <TableCell className="font-medium">{order.id.slice(0, 8)}</TableCell>
                         <TableCell>{order.restaurant?.name || 'N/A'}</TableCell>
                         <TableCell>{order.order_items?.length || 0} items</TableCell>
-                        <TableCell className="font-medium">${order.total_amount.toFixed(2)}</TableCell>
+                        <TableCell className="font-medium">₹{order.total_amount.toFixed(2)}</TableCell>
                         <TableCell>{new Date(order.created_at).toLocaleDateString()}</TableCell>
                         <TableCell>
                           <Badge className={statusInfo.color}>{statusInfo.label}</Badge>

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getDashboardStats } from '@/db/api';
 import type { DashboardStats } from '@/types/types';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ShoppingBag, DollarSign, Users, UtensilsCrossed } from 'lucide-react';
+import { ShoppingBag, IndianRupee, Users, UtensilsCrossed } from 'lucide-react';
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -34,8 +34,8 @@ export default function AdminDashboardPage() {
     },
     {
       title: 'Total Revenue',
-      value: `$${stats?.total_revenue.toFixed(2) || '0.00'}`,
-      icon: DollarSign,
+      value: `₹${stats?.total_revenue.toFixed(2) || '0.00'}`,
+      icon: IndianRupee,
       color: 'text-secondary'
     },
     {

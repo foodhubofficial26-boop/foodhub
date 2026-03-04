@@ -114,7 +114,7 @@ export default function CheckoutPage() {
     }
 
     const restaurantId = cart[0].food_item.restaurant_id;
-    const totalAmount = cart.reduce((sum, item) => sum + item.food_item.price * item.quantity, 0) + 2.99;
+    const totalAmount = cart.reduce((sum, item) => sum + item.food_item.price * item.quantity, 0) + 40;
 
     setLoading(true);
     try {
@@ -145,7 +145,7 @@ export default function CheckoutPage() {
   };
 
   const subtotal = cart.reduce((sum, item) => sum + item.food_item.price * item.quantity, 0);
-  const deliveryFee = 2.99;
+  const deliveryFee = 40;
   const total = subtotal + deliveryFee;
 
   return (
@@ -281,22 +281,22 @@ export default function CheckoutPage() {
                       <span>
                         {item.food_item.name} x{item.quantity}
                       </span>
-                      <span>${(item.food_item.price * item.quantity).toFixed(2)}</span>
+                      <span>₹{(item.food_item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
                 <div className="border-t pt-2 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>₹{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Delivery Fee</span>
-                    <span>${deliveryFee.toFixed(2)}</span>
+                    <span>₹{deliveryFee.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span className="text-primary">${total.toFixed(2)}</span>
+                    <span className="text-primary">₹{total.toFixed(2)}</span>
                   </div>
                 </div>
                 <Button
